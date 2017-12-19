@@ -1,1 +1,3 @@
 language: cpp
+script: make clean && make && make test
+compiler: gcc
