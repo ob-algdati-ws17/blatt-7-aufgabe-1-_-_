@@ -11,11 +11,12 @@ class AvlTree {
 private:
 
     struct Node {
-        const int key;
+        const int value;
         Node *left = nullptr;
         Node *right = nullptr;
-        Node(const int);
-        Node(const int, Node *, Node *);
+        Node *parent = nullptr;
+        Node(const int value, Node* parent);
+        Node(const int value, Node* left, Node*, Node* right);
         ~Node();
         vector<int> *preorder() const;  // (Hauptreihenfolge)
         vector<int> *inorder() const;   // (Symmetrische Reihenfolge)
@@ -23,6 +24,7 @@ private:
     };
 
     Node *root = nullptr;
+    bool searchInPartTree(const int value, Node* node)const;
 
 public:
 
