@@ -7,7 +7,6 @@ add_subdirectory(avltree)
 
 set(SOURCE_FILES main.cpp)
 add_executable(Main ${SOURCE_FILES})
-add_executable(Tests test/testAvlTree.cpp)
 
 target_link_libraries(Main LINK_PUBLIC avltree)
 
@@ -40,4 +39,4 @@ add_subdirectory(test)
 
 enable_testing()
 
-add_test(testBinTree test/testBinTree --gtest_output=xml:report.xml)
+add_test(testAvlTree test/testAvlTree --gtest_output=xml:report.xml)
