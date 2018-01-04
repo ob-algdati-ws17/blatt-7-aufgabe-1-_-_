@@ -6,7 +6,7 @@ using namespace std;
 // empty tree
 
 TEST(AvlTreeTest, Empty_Tree) {
-    BinTree b;
+    AvlTree b;
     EXPECT_EQ(nullptr, b.preorder());
     EXPECT_EQ(nullptr, b.inorder());
     EXPECT_EQ(nullptr, b.postorder());
@@ -15,7 +15,7 @@ TEST(AvlTreeTest, Empty_Tree) {
 // insert and search
 
 TEST(AvlTreeTest, One_Node) {
-    BinTree b;
+    AvlTree b;
     b.insert(12213);
     EXPECT_TRUE(b.search(12213));
     EXPECT_FALSE(b.search(123));
@@ -26,7 +26,7 @@ TEST(AvlTreeTest, One_Node) {
 }
 
 TEST(AvlTreeTest, Two_Nodes) {
-    BinTree b;
+    AvlTree b;
     b.insert(12213);
     b.insert(215);
     EXPECT_TRUE(b.search(12213));
@@ -37,7 +37,7 @@ TEST(AvlTreeTest, Two_Nodes) {
 }
 
 TEST(AvlTreeTest, Three_Nodes) {
-    BinTree b;
+    AvlTree b;
     b.insert(12213);
     b.insert(215);
     b.insert(123712);
@@ -52,7 +52,7 @@ TEST(AvlTreeTest, Three_Nodes) {
 // insert, remove and search
 
 TEST(BinTreeTest, One_Node_Insert_Remove) {
-    BinTree b;
+    AvlTree b;
     b.insert(12213);
     EXPECT_TRUE(b.search(12213));
     EXPECT_FALSE(b.search(123));
@@ -68,7 +68,7 @@ TEST(BinTreeTest, One_Node_Insert_Remove) {
 }
 
 TEST(AvlTreeTest, Two_Nodes_Insert_Remove) {
-    BinTree b;
+    AvlTree b;
     b.insert(12213);
     b.insert(215);
     EXPECT_TRUE(b.search(12213));
@@ -90,7 +90,7 @@ TEST(AvlTreeTest, Two_Nodes_Insert_Remove) {
 }
 
 TEST(AvlTreeTest, Three_Nodes_Insert_Remove) {
-    BinTree b;
+    AvlTree b;
     b.insert(12213);
     b.insert(215);
     b.insert(123712);
