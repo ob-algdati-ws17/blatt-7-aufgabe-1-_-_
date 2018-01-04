@@ -159,12 +159,8 @@ AvlTree::Node *AvlTree::searchNode(const int value) {
  * Destructor for Node, deletes all the childs.
  */
 AvlTree::Node::~Node() {
-    if (left != nullptr) {
-        delete nullptr;
-    }
-    if (right != nullptr) {
-        delete nullptr;
-    }
+    delete left;
+    delete right;
 }
 
 /**

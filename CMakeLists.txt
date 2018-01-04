@@ -7,6 +7,7 @@ add_subdirectory(avltree)
 
 set(SOURCE_FILES main.cpp)
 add_executable(Main ${SOURCE_FILES})
+add_library(avltree MODULE avltree/AvlTree.cpp)
 
 target_link_libraries(Main LINK_PUBLIC avltree)
 

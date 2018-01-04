@@ -1,3 +1,3 @@
 language: cpp
-script: make main
+script: make avltree
 compiler: gcc

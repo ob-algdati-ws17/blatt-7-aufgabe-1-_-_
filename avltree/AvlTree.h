@@ -12,9 +12,6 @@ private:
 
     struct Node {
         const int value;
-        Node *left = nullptr;
-        Node *right = nullptr;
-
         explicit Node(const int value);
         Node(const int value, Node* left, Node* right);
         ~Node();
@@ -24,6 +21,8 @@ private:
     };
 
     Node *root = nullptr;
+    Node *left = nullptr;
+    Node *right = nullptr;
     Node* searchLeft(const int value, Node* node)const;
     Node* searchRight(const int value, Node* node) const;
     Node* searchNode(const int value);
