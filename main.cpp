@@ -2,7 +2,7 @@
 #include <fstream>
 #include <sstream>
 
-#include "AvlTree.h"
+#include "avltree/AvlTree.h"
 
 using namespace std;
 
