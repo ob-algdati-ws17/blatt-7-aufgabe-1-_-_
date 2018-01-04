@@ -95,10 +95,40 @@ void AvlTree::insert(const int value) {
         if (root == nullptr) {
             root = new Node(value);
         } else {
-
+            if (root->value > value) {
+                if (root->left != nullptr) {
+                    root->left->insert(value);
+                } else {
+                    root->left = new Node(value);
+                }
+            } else {
+                if (root->right != nullptr) {
+                    root->right->insert(value);
+                } else {
+                    root->right = new Node(value);
+                }
+            }
         }
     }
 }
+
+void AvlTree::Node::insert(const int value) {
+    if (this->value > value) {
+        if (this->left != nullptr) {
+            this->left->insert(value);
+        } else {
+            this->left = new Node(value);
+        }
+    } else {
+        if (this->right != nullptr) {
+            this->right->insert(value);
+        } else {
+            this->right = new Node(value);
+        }
+    }
+
+}
+
 
 /********************************************************************
  * Remove
@@ -267,7 +297,6 @@ vector<int> *AvlTree::Node::postorder() const {
     vec->push_back(value);
     return vec;
 }
-
 /********************************************************************
  * operator<<
  *******************************************************************/

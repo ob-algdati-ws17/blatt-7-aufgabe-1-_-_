@@ -50,6 +50,7 @@ TEST(AvlTreeTest, Three_Nodes) {
 }
 
 // insert, remove and search
+/*
 
 TEST(BinTreeTest, One_Node_Insert_Remove) {
     AvlTree b;
@@ -120,3 +121,4 @@ TEST(AvlTreeTest, Three_Nodes_Insert_Remove) {
     EXPECT_EQ(nullptr, b.inorder());
     EXPECT_EQ(nullptr, b.postorder());
 }
+*/

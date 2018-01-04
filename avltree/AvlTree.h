@@ -14,15 +14,16 @@ private:
         const int value;
         explicit Node(const int value);
         Node(const int value, Node* left, Node* right);
+        Node *left = nullptr;
+        Node *right = nullptr;
         ~Node();
         vector<int> *preorder() const;  // (Hauptreihenfolge)
         vector<int> *inorder() const;   // (Symmetrische Reihenfolge)
         vector<int> *postorder() const; // (Nebenreihenfolge)
+        void insert(const int value);
     };
 
     Node *root = nullptr;
-    Node *left = nullptr;
-    Node *right = nullptr;
     Node* searchLeft(const int value, Node* node)const;
     Node* searchRight(const int value, Node* node) const;
     Node* searchNode(const int value);
