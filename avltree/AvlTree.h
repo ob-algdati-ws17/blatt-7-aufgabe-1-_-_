@@ -14,9 +14,8 @@ private:
         const int value;
         Node *left = nullptr;
         Node *right = nullptr;
-        Node *parent = nullptr;
-        Node(const int value, Node* parent);
-        Node(const int value, Node* left, Node*, Node* right);
+        Node(const int value);
+        Node(const int value, Node* left, Node* right);
         ~Node();
         vector<int> *preorder() const;  // (Hauptreihenfolge)
         vector<int> *inorder() const;   // (Symmetrische Reihenfolge)
@@ -24,7 +23,10 @@ private:
     };
 
     Node *root = nullptr;
-    bool searchInPartTree(const int value, Node* node)const;
+    Node* searchLeft(const int value, Node* node)const;
+    Node* searchRight(const int value, Node* node) const;
+    Node* searchNode(const int value);
+    bool isLeaf();
 
 public:
 

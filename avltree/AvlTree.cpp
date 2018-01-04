@@ -7,38 +7,96 @@ using namespace ::std;
  * Search
  *******************************************************************/
 
+/**
+ * Searches for a value in the Tree.
+ * @param value value to look for
+ * @return true if found, false otherwise.
+ * @related searchNode
+ */
 bool AvlTree::search(const int value) const {
-    if (root->value != value) {
-        if (!searchInPartTree(value, root->left)) {
-            if (!searchInPartTree(value, root->left)) {
-                return false;
+    if (root != nullptr) {
+        if (root->value == value) {
+            return true;
+        } else {
+            if (root->value > value) {
+                return searchLeft(value, root) != nullptr;
+            } else {
+                return searchRight(value, root) != nullptr;
             }
         }
-    }
-    return true;
-}
-
-bool AvlTree::searchInPartTree(const int value, AvlTree::Node *node)const {
-    if (node != nullptr) {
-        if (node->value != value) {
-            if (!searchInPartTree(value, node->left)) {
-                if (!searchInPartTree(value, node->right)) {
-                    return false;
-                }
-            }
-        }
-        return true;
     } else {
         return false;
     }
 }
+
+/**
+ * Search in left part-tree
+ * @param value Value
+ * @param node Node to start at
+ * @return pointer if found, nullptr if no more children
+ * @related searchRight
+ */
+AvlTree::Node *AvlTree::searchLeft(const int value, Node *node) const {
+    // Node auf den nächsten Knoten setzen. Hat der keine Nachfolger, ist der Wert nicht gefunden.
+    if (node->left != nullptr) {
+        node = node->left;
+    } else {
+        return nullptr;
+    }
+
+    if (node->value == value) {
+        return node;
+    } else {
+        if (node->value > value) {
+            searchLeft(value, node);
+        } else {
+            searchRight(value, node);
+        }
+    }
+}
+
+/**
+ * Search in right part-tree
+ * @param value Value
+ * @param node Node to start at
+ * @return pointer if found, nullptr if no more children
+ * @relates searchLeft
+ */
+AvlTree::Node *AvlTree::searchRight(const int value, Node *node) const {
+    // Node auf den nächsten Knoten setzen. Hat der keine Nachfolger, ist der Wert nicht gefunden.
+    if (node->right != nullptr) {
+        node = node->right;
+    } else {
+        return nullptr;
+    }
+
+    if (node->value == value) {
+        return node;
+    } else {
+        if (node->value > value) {
+            searchLeft(value, node);
+        } else {
+            searchRight(value, node);
+        }
+    }
+}
+
+
 /********************************************************************
  * Insert
  *******************************************************************/
 
+/**
+ * Insert a value to the tree, if it isn't already contained.
+ * @param value value to insert.
+ */
 void AvlTree::insert(const int value) {
     if (!search(value)) {
+        if (root == nullptr) {
+            root = new Node(value);
+        } else {
 
+        }
     }
 }
 
@@ -46,9 +104,100 @@ void AvlTree::insert(const int value) {
  * Remove
  *******************************************************************/
 
+/**
+ * Remove a value if it is in the tree
+ * @param value value to remove
+ */
 void AvlTree::remove(const int value) {
+    if (search(value)) {
+
+    }
+}
+
+/********************************************************************
+ * Utils
+ *******************************************************************/
+
+/**
+ * Checks if a Node is a Leaf
+ * @return true if it is a leaf, false otherwise.
+ */
+bool AvlTree::isLeaf() {
+    return left == nullptr && right == nullptr;
+}
+
+/**
+ * Search the Node for a value.
+ * @param value value to search for.
+ * @return pointer if found, nullptr otherwise.
+ * @relates search
+ */
+AvlTree::Node *AvlTree::searchNode(const int value) {
+    if (root->value == value) {
+        return root;
+    } else {
+        if (root->value > value) {
+            return searchLeft(value, root);
+        } else {
+            return searchRight(value, root);
+        }
+    }
+}
+
+
+/********************************************************************
+ * Rotations
+ *******************************************************************/
+
+
+
+/********************************************************************
+ * Destructors
+ *******************************************************************/
+
+/**
+ * Destructor for Node, deletes all the childs.
+ */
+AvlTree::Node::~Node() {
+    if (left != nullptr) {
+        delete nullptr;
+    }
+    if (right != nullptr) {
+        delete nullptr;
+    }
+}
+
+/**
+ * Destructor for Tree, deletes Root-Node
+ */
+AvlTree::~AvlTree() {
+    delete root;
+}
+
+
+/********************************************************************
+ * Constructors
+ *******************************************************************/
+
+/**
+ * Construct a new Node with no child nodes.
+ * @param value Value of the Node
+ */
+AvlTree::Node::Node(const int value) : value(value) {
 
 }
+
+/**
+ * Constructs a new Node with the given child nodes.
+ * @param value Value of the Node.
+ * @param left  Left child Node.
+ * @param right Right child Node.
+ */
+AvlTree::Node::Node(const int value, AvlTree::Node *left, AvlTree::Node *right) : value(value), left(left),
+                                                                                  right(right) {
+
+}
+
 
 /********************************************************************
  * Traversal
@@ -123,34 +272,11 @@ vector<int> *AvlTree::Node::postorder() const {
     return vec;
 }
 
-/**
- * Construct a new Node with no child nodes.
- * @param value Value of the Node
- * @param parent Parent Node, can be null if its the root.
- */
-AvlTree::Node::Node(const int value, AvlTree::Node *parent) : value(value), parent(parent) {
-
-}
-
-/**
- * Constructs a new Node with the given child nodes.
- * @param value Value of the Node.
- * @param left  Left child Node.
- * @param right Right child Node.
- */
-AvlTree::Node::Node(const int value, AvlTree::Node *left, AvlTree::Node *, AvlTree::Node *right) : value(value),
-                                                                                                 parent(parent),
-                                                                                                 left(left),
-                                                                                                 right(right) {
-
-}
-
-
 /********************************************************************
  * operator<<
  *******************************************************************/
 std::ostream &operator<<(std::ostream &os, const AvlTree &tree) {
-    function<void(std::ostream &, const int value, const AvlTree::Node* node, const string l)> printToOs
+    function<void(std::ostream &, const int value, const AvlTree::Node *node, const string l)> printToOs
             = [&](std::ostream &os, const int value, const AvlTree::Node *node, const string l) {
 
                 static int nullcount = 0;
@@ -177,25 +303,6 @@ std::ostream &operator<<(std::ostream &os, const AvlTree &tree) {
     }
     os << "}" << endl;
     return os;
-}
-
-/**
- * Destructor for Node, deletes all the childs.
- */
-AvlTree::Node::~Node() {
-    if (left != nullptr) {
-        delete nullptr;
-    }
-    if (right != nullptr) {
-        delete nullptr;
-    }
-}
-
-/**
- * Destructor for Tree, deletes Root-Node
- */
-AvlTree::~AvlTree() {
-    delete root;
 }
 
 
