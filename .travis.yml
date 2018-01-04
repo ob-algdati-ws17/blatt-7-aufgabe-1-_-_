@@ -1,3 +1,6 @@
 language: cpp
-script: make test
+script:
+  - cmake ..
+  - make clean all
+  - test/testAvlTree
 compiler: gcc
