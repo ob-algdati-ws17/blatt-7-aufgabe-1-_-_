@@ -135,9 +135,7 @@ void AvlTree::remove(const int value) {
                 root = root->right;
             } else {
                 auto symSucc = root->findSymS(root);
-                // Keep the right side of symSucc
-                symSucc->parent->left = symSucc->right;
-                symSucc->right->parent = symSucc->parent;
+                // TODO Keep the right side of symSucc
                 // Set the new left side of symSucc
                 symSucc->left = root->left;
                 // Keep the parents correct
@@ -170,9 +168,7 @@ void AvlTree::Node::remove(const int value) {
             }
         } else {
             auto symSucc = findSymS(this);
-            // Keep the right side of symSucc
-            symSucc->parent->left = symSucc->right;
-            symSucc->right->parent = symSucc->parent;
+            // TODO Keep the right side of symSucc
             // Set the new left side of symSucc
             symSucc->left = this->left;
             // Keep the parents correct
