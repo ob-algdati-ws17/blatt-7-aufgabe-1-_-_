@@ -13,17 +13,22 @@ private:
     struct Node {
         //! Simple constructor, left and right are null.
         explicit Node(const int value);
+        //! Constructor with value and parent.
+        Node(const int value, Node* parent);
         //! More complex constructor with initialisation for left and right.
         Node(const int value, Node* left, Node* right);
         ~Node();
 
-        const int value; //!< Value of the node
-        Node *left = nullptr; //!< Left child
-        Node *right = nullptr; //!< Right child
+        const int value;        //!< Value of the node
+        Node *left = nullptr;   //!< Left child
+        Node *right = nullptr;  //!< Right child
+        Node *parent = nullptr; //!< Parent node
         int balance = 0; //!< Current balance of the Node
 
         void insert(const int value);   //!< To remove the need for multiple sub-functions
-        Node* search(const int value);  //!< See above
+        Node* search(const int value);  //!< To remove the need for multiple sub-functions
+        void remove(const int value);   //!< To remove the need for multiple sub-functions
+        Node* findSymS(Node* node);     //!< Finds the symmetric Successor
         bool isLeaf();
 
         vector<int> *preorder() const;  //!< Hauptreihenfolge
@@ -35,6 +40,7 @@ private:
     Node *root = nullptr;
     Node* searchNode(const int value);
     void updateBalances();
+
 
 public:
 

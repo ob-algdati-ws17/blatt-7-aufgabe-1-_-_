@@ -65,6 +65,18 @@ TEST(AvlTreeTest, Four_Nodes) {
 }
 
 // insert, remove and search
+
+TEST(AvlTreeTest, Root_SymS) {
+    AvlTree b;
+    b.insert(5);
+    b.insert(4);
+    b.insert(6);
+    EXPECT_TRUE(b.search(5));
+    EXPECT_TRUE(b.search(4));
+    EXPECT_TRUE(b.search(6));
+    b.remove(5);
+}
+
 /*
 
 TEST(BinTreeTest, One_Node_Insert_Remove) {

@@ -81,13 +81,13 @@ void AvlTree::insert(const int value) {
                 if (root->left != nullptr) {
                     root->left->insert(value);
                 } else {
-                    root->left = new Node(value);
+                    root->left = new Node(value, root);
                 }
             } else {
                 if (root->right != nullptr) {
                     root->right->insert(value);
                 } else {
-                    root->right = new Node(value);
+                    root->right = new Node(value, root);
                 }
             }
         }
@@ -103,13 +103,13 @@ void AvlTree::Node::insert(const int value) {
         if (this->left != nullptr) {
             this->left->insert(value);
         } else {
-            this->left = new Node(value);
+            this->left = new Node(value, this);
         }
     } else {
         if (this->right != nullptr) {
             this->right->insert(value);
         } else {
-            this->right = new Node(value);
+            this->right = new Node(value, this);
         }
     }
 }
@@ -125,7 +125,74 @@ void AvlTree::Node::insert(const int value) {
  */
 void AvlTree::remove(const int value) {
     if (search(value)) {
+        if (root->value == value) {
+            if (root->isLeaf()) {
+                root = nullptr;
+                // Root either has no left or right children. Easiest case.
+            } else if (root->right == nullptr) {
+                root = root->left;
+            } else if (root->left == nullptr) {
+                root = root->right;
+            } else {
+                auto symSucc = root->findSymS(root);
+                // Keep the right side of symSucc
+                symSucc->parent->left = symSucc->right;
+                symSucc->right->parent = symSucc->parent;
+                // Set the new left side of symSucc
+                symSucc->left = root->left;
+                // Keep the parents correct
+                root->left->parent = symSucc;
+                // symSucc will be the new root, so no parent
+                symSucc->parent = nullptr;
+                // Set the root pointer to symSucc
+                root = symSucc;
+            }
+        } else {
+            root->remove(value);
+        }
+    }
+}
 
+void AvlTree::Node::remove(const int value) {
+    if (value == this->value) {
+        if (left == nullptr && !isLeaf()) {
+            // Getting our position with the parent
+            if (this->value == parent->right->value) {
+                parent->right = right;
+            } else {
+                parent->left = right;
+            }
+        } else if (right == nullptr && !isLeaf()) {
+            if (this->value == parent->left->value) {
+                parent->left = left;
+            } else {
+                parent->right = left;
+            }
+        } else {
+            auto symSucc = findSymS(this);
+            // Keep the right side of symSucc
+            symSucc->parent->left = symSucc->right;
+            symSucc->right->parent = symSucc->parent;
+            // Set the new left side of symSucc
+            symSucc->left = this->left;
+            // Keep the parents correct
+            this->left->parent = symSucc;
+            // symSucc will be the new root, so no parent
+            symSucc->parent = this->parent;
+            if (parent->left->value ==  value) {
+                parent->left = symSucc;
+            } else {
+                parent->right = symSucc;
+            }
+        }
+        this->left = nullptr;
+        this->right = nullptr;
+        delete this;
+        return;
+    } else if (this->value > value) {
+        this->left->remove(value);
+    } else {
+        this->right->remove(value);
     }
 }
 
@@ -167,6 +234,20 @@ AvlTree::Node *AvlTree::searchNode(const int value) {
     }
 }
 
+/**
+ * Finds the symmetric successor for a node. Moved to Node struct to have accessability from Node remove.
+ * @param node Node to find successor for.
+ * @return Successor node if found, nullpointer otherwise.
+ */
+AvlTree::Node *AvlTree::Node::findSymS(Node* node) {
+    auto result = node->right;
+    if (result == nullptr)
+        return result;
+    while (result->left != nullptr) {
+        result = result->left;
+    }
+    return result;
+}
 
 /********************************************************************
  * Rotations
@@ -219,6 +300,11 @@ AvlTree::Node::Node(const int value) : value(value) {
  */
 AvlTree::Node::Node(const int value, AvlTree::Node *left, AvlTree::Node *right) : value(value), left(left),
                                                                                   right(right) {
+
+}
+
+
+AvlTree::Node::Node(const int value, AvlTree::Node *parent) : value(value), parent(parent) {
 
 }
 
@@ -300,7 +386,7 @@ vector<int> *AvlTree::Node::postorder() const {
  * operator<<
  *******************************************************************/
 std::ostream &operator<<(std::ostream &os, const AvlTree &tree) {
-    function<void(std::ostream &os, const int value, const AvlTree::Node *node, const string l)> printToOs
+    function<void(std::ostream &, const int, const AvlTree::Node *, const string)> printToOs
             = [&](std::ostream &os, const int value, const AvlTree::Node *node, const string l) {
 
                 static int nullcount = 0;
@@ -313,7 +399,6 @@ std::ostream &operator<<(std::ostream &os, const AvlTree &tree) {
                 } else {
                     os << "    " << value << " -> " << node->value
                        << " [label=\"" << l << "\"];" << endl;
-
                     printToOs(os, node->value, node->left, "l");
                     printToOs(os, node->value, node->right, "r");
                 }
