@@ -78,7 +78,6 @@ TEST(AvlTreeTest, Root_SymS) {
 }
 
 /*
-
 TEST(BinTreeTest, One_Node_Insert_Remove) {
     AvlTree b;
     b.insert(12213);

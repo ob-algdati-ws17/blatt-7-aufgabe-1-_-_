@@ -76,6 +76,7 @@ void AvlTree::insert(const int value) {
     if (!search(value)) {
         if (root == nullptr) {
             root = new Node(value);
+            root->updateBalances();
         } else {
             if (root->value > value) {
                 if (root->left != nullptr) {
@@ -89,6 +90,7 @@ void AvlTree::insert(const int value) {
                 } else {
                     root->right = new Node(value, root);
                 }
+                root->right->updateBalances();
             }
         }
     }
@@ -105,11 +107,13 @@ void AvlTree::Node::insert(const int value) {
         } else {
             this->left = new Node(value, this);
         }
+        this->updateBalances();
     } else {
         if (this->right != nullptr) {
             this->right->insert(value);
         } else {
             this->right = new Node(value, this);
+            this->updateBalances();
         }
     }
 }
@@ -135,11 +139,9 @@ void AvlTree::remove(const int value) {
                 root = root->right;
             } else {
                 auto symSucc = root->findSymS(root);
-                auto lastRight = symSucc;
+                auto lastRight = symSucc->lastRight();
                 // If symSucc has children, we want to put them in front of ours.
-                if (lastRight->right != nullptr) {
-                    while (lastRight->right != nullptr)
-                        lastRight = lastRight->right;
+                if (lastRight != nullptr) {
                     lastRight->right = root->right;
                     root->right->parent = lastRight;
                 }
@@ -149,8 +151,9 @@ void AvlTree::remove(const int value) {
                 root->left->parent = symSucc;
                 // symSucc will be the new root, so no parent
                 symSucc->parent = nullptr;
-                // Set the root pointer to symSucc
+                // Set the ro ot pointer to symSucc
                 root = symSucc;
+                root->lastRight()->updateBalances();
             }
         } else {
             root->remove(value);
@@ -167,19 +170,19 @@ void AvlTree::Node::remove(const int value) {
             } else {
                 parent->left = right;
             }
+            parent->updateBalances();
         } else if (right == nullptr && !isLeaf()) {
             if (this->value == parent->left->value) {
                 parent->left = left;
             } else {
                 parent->right = left;
             }
+            parent->updateBalances();
         } else {
             auto symSucc = findSymS(this);
-            auto lastRight = symSucc;
+            auto lastRight = symSucc->lastRight();
             // If SymSucc has right children, put them before ours.
-            if (lastRight->right != nullptr) {
-                while (lastRight->right != nullptr)
-                    lastRight = lastRight->right;
+            if (lastRight != nullptr) {
                 lastRight->right = this->right;
                 this->right->parent = lastRight;
             }
@@ -193,6 +196,8 @@ void AvlTree::Node::remove(const int value) {
             } else {
                 parent->right = symSucc;
             }
+            // Call lasRight Again
+            symSucc->lastRight()->updateBalances();
         }
         this->left = nullptr;
         this->right = nullptr;
@@ -243,6 +248,19 @@ AvlTree::Node *AvlTree::searchNode(const int value) {
     }
 }
 
+AvlTree::Node *AvlTree::Node::lastRight() {
+    auto lastRight = this;
+    if (lastRight->right != nullptr) {
+        while (lastRight->right != nullptr)
+            lastRight = lastRight->right;
+    }
+    if (lastRight == this) {
+        return nullptr;
+    }
+    return lastRight;
+}
+
+
 /**
  * Finds the symmetric successor for a node. Moved to Node struct to have accessability from Node remove.
  * @param node Node to find successor for.
@@ -262,7 +280,7 @@ AvlTree::Node *AvlTree::Node::findSymS(Node* node) {
  * Rotations
  *******************************************************************/
 
-void AvlTree::updateBalances() {
+void AvlTree::Node::updateBalances() {
 
 }
 
@@ -390,6 +408,7 @@ vector<int> *AvlTree::Node::postorder() const {
     vec->push_back(value);
     return vec;
 }
+
 
 /********************************************************************
  * operator<<

@@ -30,6 +30,8 @@ private:
         void remove(const int value);   //!< To remove the need for multiple sub-functions
         Node* findSymS(Node* node);     //!< Finds the symmetric Successor
         bool isLeaf();
+        void updateBalances();
+        Node* lastRight(); //!< Finds the last Right Child
 
         vector<int> *preorder() const;  //!< Hauptreihenfolge
         vector<int> *inorder() const;   //!< Symmetrische Reihenfolge
@@ -39,7 +41,6 @@ private:
     //! Root node for the Tree
     Node *root = nullptr;
     Node* searchNode(const int value);
-    void updateBalances();
 
 
 public:
