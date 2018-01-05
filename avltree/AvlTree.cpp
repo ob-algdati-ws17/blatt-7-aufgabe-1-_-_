@@ -135,7 +135,14 @@ void AvlTree::remove(const int value) {
                 root = root->right;
             } else {
                 auto symSucc = root->findSymS(root);
-                // TODO Keep the right side of symSucc
+                auto lastRight = symSucc;
+                // If symSucc has children, we want to put them in front of ours.
+                if (lastRight->right != nullptr) {
+                    while (lastRight->right != nullptr)
+                        lastRight = lastRight->right;
+                    lastRight->right = root->right;
+                    root->right->parent = lastRight;
+                }
                 // Set the new left side of symSucc
                 symSucc->left = root->left;
                 // Keep the parents correct
@@ -168,12 +175,18 @@ void AvlTree::Node::remove(const int value) {
             }
         } else {
             auto symSucc = findSymS(this);
-            // TODO Keep the right side of symSucc
+            auto lastRight = symSucc;
+            // If SymSucc has right children, put them before ours.
+            if (lastRight->right != nullptr) {
+                while (lastRight->right != nullptr)
+                    lastRight = lastRight->right;
+                lastRight->right = this->right;
+                this->right->parent = lastRight;
+            }
             // Set the new left side of symSucc
             symSucc->left = this->left;
             // Keep the parents correct
             this->left->parent = symSucc;
-            // symSucc will be the new root, so no parent
             symSucc->parent = this->parent;
             if (parent->left->value ==  value) {
                 parent->left = symSucc;
