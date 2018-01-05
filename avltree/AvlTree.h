@@ -11,23 +11,30 @@ class AvlTree {
 private:
 
     struct Node {
-        const int value;
+        //! Simple constructor, left and right are null.
         explicit Node(const int value);
+        //! More complex constructor with initialisation for left and right.
         Node(const int value, Node* left, Node* right);
-        Node *left = nullptr;
-        Node *right = nullptr;
         ~Node();
-        vector<int> *preorder() const;  // (Hauptreihenfolge)
-        vector<int> *inorder() const;   // (Symmetrische Reihenfolge)
-        vector<int> *postorder() const; // (Nebenreihenfolge)
-        void insert(const int value);
+
+        const int value; //!< Value of the node
+        Node *left = nullptr; //!< Left child
+        Node *right = nullptr; //!< Right child
+        int balance = 0; //!< Current balance of the Node
+
+        void insert(const int value);   //!< To remove the need for multiple sub-functions
+        Node* search(const int value);  //!< See above
+        bool isLeaf();
+
+        vector<int> *preorder() const;  //!< Hauptreihenfolge
+        vector<int> *inorder() const;   //!< Symmetrische Reihenfolge
+        vector<int> *postorder() const; //!< Nebenreihenfolge
     };
 
+    //! Root node for the Tree
     Node *root = nullptr;
-    Node* searchLeft(const int value, Node* node)const;
-    Node* searchRight(const int value, Node* node) const;
     Node* searchNode(const int value);
-    bool isLeaf();
+    void updateBalances();
 
 public:
 
