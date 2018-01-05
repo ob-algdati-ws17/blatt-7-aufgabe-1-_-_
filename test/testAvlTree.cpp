@@ -59,7 +59,7 @@ TEST(AvlTreeTest, Four_Nodes) {
     EXPECT_TRUE(b.search(123712));
     EXPECT_TRUE(b.search(215));
     EXPECT_TRUE(b.search(1255));
-    EXPECT_THAT(*b.preorder(), testing::ElementsAre(12213, 1255, 215, 123712));
+    EXPECT_THAT(*b.preorder(), testing::ElementsAre(12213, 215, 1255, 123712));
     EXPECT_THAT(*b.inorder(), testing::ElementsAre(215, 1255, 12213, 123712));
     EXPECT_THAT(*b.postorder(), testing::ElementsAre(1255, 215, 123712, 12213));
 }

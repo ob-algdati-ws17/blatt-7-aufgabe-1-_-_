@@ -47,14 +47,14 @@ bool AvlTree::search(const int value) const {
 AvlTree::Node *AvlTree::Node::search(const int value) {
     if (this->value != value) {
         if (this->value > value) {
-            if (this->right != nullptr) {
-                return this->right->search(value);
+            if (this->left != nullptr) {
+                return this->left->search(value);
             } else {
                 return nullptr;
             }
         } else {
-            if (this->left != nullptr) {
-                return this->left->search(value);
+            if (this->right != nullptr) {
+                return this->right->search(value);
             } else {
                 return nullptr;
             }
@@ -112,7 +112,6 @@ void AvlTree::Node::insert(const int value) {
             this->right = new Node(value);
         }
     }
-
 }
 
 
@@ -172,7 +171,6 @@ AvlTree::Node *AvlTree::searchNode(const int value) {
 /********************************************************************
  * Rotations
  *******************************************************************/
-
 
 void AvlTree::updateBalances() {
 
@@ -302,7 +300,7 @@ vector<int> *AvlTree::Node::postorder() const {
  * operator<<
  *******************************************************************/
 std::ostream &operator<<(std::ostream &os, const AvlTree &tree) {
-    function<void(std::ostream &, const int value, const AvlTree::Node *node, const string l)> printToOs
+    function<void(std::ostream &os, const int value, const AvlTree::Node *node, const string l)> printToOs
             = [&](std::ostream &os, const int value, const AvlTree::Node *node, const string l) {
 
                 static int nullcount = 0;
