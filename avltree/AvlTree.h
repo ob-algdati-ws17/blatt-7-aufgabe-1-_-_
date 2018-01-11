@@ -71,9 +71,17 @@ private:
         */
         bool isLeaf();
 
+        /**
+         * Updates the balances for this Node. Returns current balance.
+         * @return this->balance
+         */
         int updateBalances();
 
-        Node *lastRight(); //!< Finds the last Right Child
+        /**
+         * Finds the last right child of this Node.
+         * @return The last right node.
+         */
+        Node *lastRight();
 
         vector<int> *preorder() const;  //!< Hauptreihenfolge
         vector<int> *inorder() const;   //!< Symmetrische Reihenfolge
