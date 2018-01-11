@@ -75,7 +75,7 @@ void AvlTree::insert(const int value) {
                 } else {
                     root->right = new Node(value, root);
                 }
-                root->right->updateBalances();
+                root->updateBalances();
             }
         }
     }
@@ -131,7 +131,7 @@ void AvlTree::remove(const int value) {
                 symSucc->parent = nullptr;
                 // Set the ro ot pointer to symSucc
                 root = symSucc;
-                root->lastRight()->updateBalances();
+                root->updateBalances();
             }
         } else {
             root->remove(value);
@@ -169,13 +169,13 @@ void AvlTree::Node::remove(const int value) {
             // Keep the parents correct
             this->left->parent = symSucc;
             symSucc->parent = this->parent;
-            if (parent->left->value ==  value) {
+            if (parent->left->value == value) {
                 parent->left = symSucc;
             } else {
                 parent->right = symSucc;
             }
             // Call lasRight Again
-            symSucc->lastRight()->updateBalances();
+            symSucc->updateBalances();
         }
         this->left = nullptr;
         this->right = nullptr;
@@ -228,7 +228,7 @@ AvlTree::Node *AvlTree::Node::lastRight() {
     return lastRight;
 }
 
-AvlTree::Node *AvlTree::Node::findSymS(Node* node) {
+AvlTree::Node *AvlTree::Node::findSymS(Node *node) {
     auto result = node->right;
     if (result == nullptr)
         return result;
@@ -242,11 +242,18 @@ AvlTree::Node *AvlTree::Node::findSymS(Node* node) {
  * Rotations
  *******************************************************************/
 
-void AvlTree::Node::updateBalances() {
-
+int AvlTree::Node::updateBalances() {
+    if (this->left == nullptr && this->right == nullptr) {
+        this->balance = 0;
+    } else if (this->left == nullptr && this->right != nullptr) {
+        this->balance = this->right->updateBalances() + 1;
+    } else if (this->right == nullptr && this->left != nullptr) {
+        this->balance = -this->left->updateBalances() + 1;
+    } else {
+        this->balance = (this->right->updateBalances() + 1) - (this->left->updateBalances() + 1);
+    }
+    return this->balance;
 }
-
-
 
 
 /********************************************************************

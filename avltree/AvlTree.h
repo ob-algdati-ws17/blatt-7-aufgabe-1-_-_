@@ -71,7 +71,7 @@ private:
         */
         bool isLeaf();
 
-        void updateBalances();
+        int updateBalances();
 
         Node *lastRight(); //!< Finds the last Right Child
 
