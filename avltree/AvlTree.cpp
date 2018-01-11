@@ -7,12 +7,6 @@ using namespace ::std;
  * Search
  *******************************************************************/
 
-/**
- * Searches for a value in the Tree.
- * @param value value to look for
- * @return true if found, false otherwise.
- * @related searchNode
- */
 bool AvlTree::search(const int value) const {
     if (root != nullptr) {
         if (root->value == value) {
@@ -39,11 +33,6 @@ bool AvlTree::search(const int value) const {
     }
 }
 
-/**
- * Searches for a value in the Tree. Node function.
- * @param value Value to search for.
- * @return Node pointer if found, nullpointer otherwise.
- */
 AvlTree::Node *AvlTree::Node::search(const int value) {
     if (this->value != value) {
         if (this->value > value) {
@@ -68,10 +57,6 @@ AvlTree::Node *AvlTree::Node::search(const int value) {
  * Insert
  *******************************************************************/
 
-/**
- * Insert a value to the tree, if it isn't already contained.
- * @param value [in] value to insert.
- */
 void AvlTree::insert(const int value) {
     if (!search(value)) {
         if (root == nullptr) {
@@ -96,10 +81,7 @@ void AvlTree::insert(const int value) {
     }
 }
 
-/**
- * Inserts a value in the Tree. Node fuction to prevent multiple sub-functions.
- * @param value [in] Value to insert
- */
+
 void AvlTree::Node::insert(const int value) {
     if (this->value > value) {
         if (this->left != nullptr) {
@@ -123,10 +105,6 @@ void AvlTree::Node::insert(const int value) {
  * Remove
  *******************************************************************/
 
-/**
- * Remove a value if it is in the tree
- * @param value value to remove
- */
 void AvlTree::remove(const int value) {
     if (search(value)) {
         if (root->value == value) {
@@ -214,20 +192,10 @@ void AvlTree::Node::remove(const int value) {
  * Utils
  *******************************************************************/
 
-/**
- * Checks if a Node is a Leaf
- * @return true if it is a leaf, false otherwise.
- */
 bool AvlTree::Node::isLeaf() {
     return left == nullptr && right == nullptr;
 }
 
-/**
- * Search the Node for a value.
- * @param value value to search for.
- * @return pointer if found, nullptr otherwise.
- * @relates search
- */
 AvlTree::Node *AvlTree::searchNode(const int value) {
     if (root->value == value) {
         return root;
@@ -260,12 +228,6 @@ AvlTree::Node *AvlTree::Node::lastRight() {
     return lastRight;
 }
 
-
-/**
- * Finds the symmetric successor for a node. Moved to Node struct to have accessability from Node remove.
- * @param node Node to find successor for.
- * @return Successor node if found, nullpointer otherwise.
- */
 AvlTree::Node *AvlTree::Node::findSymS(Node* node) {
     auto result = node->right;
     if (result == nullptr)
@@ -291,17 +253,11 @@ void AvlTree::Node::updateBalances() {
  * Destructors
  *******************************************************************/
 
-/**
- * Destructor for Node, deletes all the childs.
- */
 AvlTree::Node::~Node() {
     delete left;
     delete right;
 }
 
-/**
- * Destructor for Tree, deletes Root-Node
- */
 AvlTree::~AvlTree() {
     delete root;
 }
@@ -311,25 +267,14 @@ AvlTree::~AvlTree() {
  * Constructors
  *******************************************************************/
 
-/**
- * Construct a new Node with no child nodes.
- * @param value Value of the Node
- */
 AvlTree::Node::Node(const int value) : value(value) {
 
 }
 
-/**
- * Constructs a new Node with the given child nodes.
- * @param value Value of the Node.
- * @param left  Left child Node.
- * @param right Right child Node.
- */
 AvlTree::Node::Node(const int value, AvlTree::Node *left, AvlTree::Node *right) : value(value), left(left),
                                                                                   right(right) {
 
 }
-
 
 AvlTree::Node::Node(const int value, AvlTree::Node *parent) : value(value), parent(parent) {
 
