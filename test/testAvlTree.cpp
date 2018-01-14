@@ -148,5 +148,3 @@ TEST(AvlTreeTest, Three_Nodes_Insert_Remove) {
     EXPECT_EQ(nullptr, b.postorder());
 }
 */
-
-TEST()
