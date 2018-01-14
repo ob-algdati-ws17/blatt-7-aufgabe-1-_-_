@@ -256,6 +256,13 @@ int AvlTree::Node::updateBalances() {
 }
 
 
+void AvlTree::Node::upin(Node *p) {
+    while (&p != &root) {
+        p->updateBalances();
+        upin(p->parent);
+    }
+}
+
 /********************************************************************
  * Destructors
  *******************************************************************/

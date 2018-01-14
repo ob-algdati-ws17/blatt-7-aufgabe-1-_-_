@@ -78,6 +78,12 @@ private:
         int updateBalances();
 
         /**
+         *
+         * @param p
+         */
+        void upin(Node *p);
+
+        /**
          * Finds the last right child of this Node.
          * @return The last right node.
          */
