@@ -89,13 +89,13 @@ void AvlTree::Node::insert(const int value) {
         } else {
             this->left = new Node(value, this);
         }
-        this->updateBalances();
+        this->parent->updateBalances();
     } else {
         if (this->right != nullptr) {
             this->right->insert(value);
         } else {
             this->right = new Node(value, this);
-            this->updateBalances();
+            this->parent->updateBalances();
         }
     }
 }
