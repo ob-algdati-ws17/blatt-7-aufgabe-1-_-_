@@ -61,7 +61,6 @@ void AvlTree::insert(const int value) {
     if (!search(value)) {
         if (root == nullptr) {
             root = new Node(value);
-            root->updateBalances();
 
         } else {
             if (root->value > value) {
@@ -77,6 +76,7 @@ void AvlTree::insert(const int value) {
                     root->right = new Node(value, root);
                 }
                 root->updateBalances();
+                upIn(this->root->parent);
             }
         }
     }
@@ -133,6 +133,7 @@ void AvlTree::remove(const int value) {
                 // Set the ro ot pointer to symSucc
                 root = symSucc;
                 root->updateBalances();
+                upOut(this->root->parent);
             }
         } else {
             root->remove(value);
