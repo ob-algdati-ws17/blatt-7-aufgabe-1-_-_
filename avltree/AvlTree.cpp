@@ -76,7 +76,6 @@ void AvlTree::insert(const int value) {
                     root->right = new Node(value, root);
                 }
                 root->updateBalances();
-                upIn(this->root->parent);
             }
         }
     }
@@ -91,14 +90,17 @@ void AvlTree::Node::insert(const int value) {
             this->left = new Node(value, this);
         }
         this->parent->updateBalances();
+        upIn(this->parent);
     } else {
         if (this->right != nullptr) {
             this->right->insert(value);
         } else {
             this->right = new Node(value, this);
             this->parent->updateBalances();
+            upIn(this->right);
         }
     }
+
 }
 
 
@@ -133,7 +135,6 @@ void AvlTree::remove(const int value) {
                 // Set the ro ot pointer to symSucc
                 root = symSucc;
                 root->updateBalances();
-                upOut(this->root->parent);
             }
         } else {
             root->remove(value);
@@ -151,6 +152,7 @@ void AvlTree::Node::remove(const int value) {
                 parent->left = right;
             }
             parent->updateBalances();
+            upOut(parent);
         } else if (right == nullptr && !isLeaf()) {
             if (this->value == parent->left->value) {
                 parent->left = left;
@@ -158,6 +160,8 @@ void AvlTree::Node::remove(const int value) {
                 parent->right = left;
             }
             parent->updateBalances();
+            upOut(parent);
+
         } else {
             auto symSucc = findSymS(this);
             auto lastRight = symSucc->lastRight();
@@ -178,6 +182,7 @@ void AvlTree::Node::remove(const int value) {
             }
             // Call lasRight Again
             symSucc->updateBalances();
+            upOut(symSucc);
         }
         this->left = nullptr;
         this->right = nullptr;
@@ -262,7 +267,7 @@ int AvlTree::Node::updateBalances() {
 }
 
 
-void AvlTree::upIn(Node *p) {
+void AvlTree::Node::upIn(Node *p) {
     if (p != nullptr && p->parent != nullptr) {
 
         auto *parent = p->parent;
@@ -284,7 +289,7 @@ void AvlTree::upIn(Node *p) {
                     rotateRight(parent);
                 }
                 //case 1.3.2
-                else if (p->balance == 1) {
+                else {
                     rotateLeft(p);
                     rotateRight(parent);
                 }
@@ -299,7 +304,7 @@ void AvlTree::upIn(Node *p) {
                     rotateLeft(parent);
                 }
                     //case 1.3.2
-                else if (p->balance == -1) {
+                else {
                     rotateRight(p);
                     rotateLeft(parent);
                 }
@@ -317,7 +322,7 @@ void AvlTree::upIn(Node *p) {
     }
 }
 
-void AvlTree::upOut(Node *p) {
+void AvlTree::Node::upOut(Node *p) {
 
     if (p != nullptr && p->parent != nullptr) {
         auto *parent = p->parent;
@@ -386,7 +391,7 @@ void AvlTree::upOut(Node *p) {
 
 }
 
-AvlTree::Node * AvlTree::rotateRight(Node *p) {
+AvlTree::Node * AvlTree::Node::rotateRight(Node *p) {
     auto *parent = p->parent;
     auto *rightNodeTail = p->right;
     auto *leftNodeTail = p->left;
@@ -408,7 +413,7 @@ AvlTree::Node * AvlTree::rotateRight(Node *p) {
 
 }
 
-AvlTree::Node * AvlTree::rotateLeft(Node *p) {
+AvlTree::Node * AvlTree::Node::rotateLeft(Node *p) {
     auto *parent = p->parent;
     auto *leftTail = p->left;
     auto *rightTail = p->right;
@@ -422,6 +427,7 @@ AvlTree::Node * AvlTree::rotateLeft(Node *p) {
     rightTail->left = p;
 
     p->balance -= 1;
+    p->right->balance -= 1;
     return parent->right;
 }
 

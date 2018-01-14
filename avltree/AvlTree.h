@@ -58,6 +58,36 @@ private:
          */
         void remove(const int value);   //!< To remove the need for multiple sub-functions
 
+
+
+
+        /**
+            * Makes left/right rotations depending on the balances of the nodes (insert)
+            * @param p left or right node
+            */
+        void upIn(Node *p);
+
+
+        /**
+         * Makes left/right rotations depending on the balances of the nodes (delete)
+         * @param p left or right node
+         */
+        void upOut(Node *p);
+
+        /**
+         * Rotates Left
+         * @param p the node to be rotated around
+         * @return the node, which is now on top
+         */
+        Node *rotateLeft(Node *p);
+
+        /**
+         * Rotates right
+         * @param p the node to be rotated around
+         * @return the node, which is now on top
+         */
+        Node *rotateRight(Node *p);
+
         /**
         * Finds the symmetric successor for a node. Moved to Node struct to have accessability from Node remove.
         * @param node Node to find successor for.
@@ -130,37 +160,11 @@ public:
     */
     void remove(const int);
 
-    /**
-        * Makes left/right rotations depending on the balances of the nodes (insert)
-        * @param p left or right node
-        */
-    void upIn(Node *p);
-
-    /**
+/**
      * checks, if the root is balanced
      * @return true, if the balance of the root is 0
      */
     bool isEquallyBalanced() const;
-
-    /**
-     * Makes left/right rotations depending on the balances of the nodes (delete)
-     * @param p left or right node
-     */
-    void upOut(Node *p);
-
-    /**
-     * Rotates Left
-     * @param p the node to be rotated around
-     * @return the node, which is now on top
-     */
-    Node *rotateLeft(Node *p);
-
-    /**
-     * Rotates right
-     * @param p the node to be rotated around
-     * @return the node, which is now on top
-     */
-    Node *rotateRight(Node *p);
 
     vector<int> *preorder() const;  // (Hauptreihenfolge)
     vector<int> *inorder() const;   // (Symmetrische Reihenfolge)
