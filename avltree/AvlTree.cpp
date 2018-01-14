@@ -275,11 +275,12 @@ void AvlTree::Node::upIn(Node *p) {
             else if (parent->balance == -1) {
                 //case 1.3.1
                 if (p->balance == -1) {
-                    //TODO Rotation nach rechts, dann fertig
+                    rotateRight(parent);
                 }
                 //case 1.3.2
                 else if (p->balance == 1) {
-                    //Doppelrotation links rechts, dann fertig
+                    rotateLeft(p);
+                    rotateRight(parent);
                 }
             }
         }
@@ -289,11 +290,12 @@ void AvlTree::Node::upIn(Node *p) {
             if (parent->balance == 1) {
                 //case 1.3.1
                 if (balance == 1) {
-                    //TODO Rotation nach links
+                    rotateLeft(parent);
                 }
                     //case 1.3.2
                 else if (p->balance == -1) {
-                    //TODO Doppelrotation rechts links
+                    rotateRight(p);
+                    rotateLeft(parent);
                 }
             }
             //case 1.2
@@ -328,17 +330,18 @@ void AvlTree::Node::upOut(Node *p) {
             else if (parent->balance == 1) {
                 //case 1.3.1
                 if (p->balance == 0) {
-                    //TODO Rotation nach links, dann fertig
+                    rotateLeft(parent);
                 }
                 //case 1.3.2
                 else if (p->balance == 1) {
-                    //Todo Rotation nach links
-                    //TODO upOut()
+                    parent = rotateLeft(parent);
+                    upOut(parent);
                 }
                 //case 1.3.3
                 else if (p->balance == -1) {
-                    //TODO Rotation nach rechts links
-                    //TODO upout()
+                    rotateRight(parent->right);
+                    parent = rotateLeft(parent);
+                    upOut(parent);
                 }
             }
         }
@@ -348,17 +351,18 @@ void AvlTree::Node::upOut(Node *p) {
             if (parent->balance == -1) {
                 //case 1.3.1
                 if (p->balance == 0)  {
-                    //TODO Rotatioon nach rechts
+                    rotateRight(parent);
                 }
                 //case 1.3.2
                 else if(p->balance == 1) {
-                    //Todo Rotation nach rechts
-                    //TODO upout()
+                    parent = rotateRight(parent);
+                    upOut(parent);
                 }
                 //case 1.3.3
                 else if (p->balance == -1) {
-                    //TODO Rotation links rechts
-                    //TODO upout()
+                    rotateLeft(parent->left);
+                    parent = rotateRight(parent);
+                    upOut(parent);
                 }
             }
             //case 1.2
@@ -374,6 +378,44 @@ void AvlTree::Node::upOut(Node *p) {
         }
     }
 
+}
+
+AvlTree::Node * AvlTree::Node::rotateRight(Node *p) {
+    auto *parent = p->parent;
+    auto *rightNodeTail = p->right;
+    auto *leftNodeTail = p->left;
+    auto *rightParentTail = parent->right;
+
+    if (parent->parent->left == parent) {
+        parent->parent->left = p;
+    } else {
+        parent->parent->right = p;
+    }
+    p->left = leftNodeTail;
+    p->right = parent;
+    p->right->left = rightNodeTail;
+    p->right->right = rightParentTail;
+
+    p->balance += 1;
+    p->left->balance += 1;
+    return p->left;
+
+}
+
+AvlTree::Node * AvlTree::Node::rotateLeft(Node *p) {
+    auto *parent = p->parent;
+    auto *leftTail = p->left;
+    auto *rightTail = p->right;
+
+    if (parent->left == p) {
+        parent->left = rightTail;
+    } else {
+        parent->right = rightTail;
+    }
+    p->right = rightTail->left;
+    rightTail->left = p;
+
+    p->balance -= 1;
 }
 
 /********************************************************************
