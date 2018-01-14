@@ -53,6 +53,12 @@ private:
         Node *search(const int value);
 
         /**
+         * Checks, if the balance is 0
+         * @return true if balance is 0.
+         */
+        bool isEquallyBalanced() const;
+
+        /**
          * Removes a Value from the Tree. Node Function.
          * @param value Value to remove.
          */
