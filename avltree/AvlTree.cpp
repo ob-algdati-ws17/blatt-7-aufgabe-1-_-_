@@ -257,9 +257,43 @@ int AvlTree::Node::updateBalances() {
 
 
 void AvlTree::Node::upin(Node *p) {
-    while (&p != &root) {
-        p->updateBalances();
-        upin(p->parent);
+    if (p != nullptr && p->parent != nullptr) {
+
+        //the insert was on the left side
+        if (p->parent->left == p) {
+            if (p->parent->balance == 1) {
+                p->parent->balance = 0;
+            }
+            else if (p->parent->balance == 0) {
+                p->parent->balance = -1;
+                upin(p->parent);
+            }
+            else if (p->parent->balance == -1) {
+                if (p->balance == -1) {
+                    //TODO Rotation nach rechts, dann fertig
+                }
+                else if (p->balance == 1) {
+                    //Doppelrotation links rechts, dann fertig
+                }
+            }
+        }
+        else {
+            if (p->parent->balance == 1) {
+                if (p->balance == 1) {
+                    //TODO Rotation nach links
+                }
+                else if (p->balance == -1) {
+                    //TODO Doppelrotation rechts links
+                }
+            }
+            else if(p->parent->balance == 0) {
+                p->parent->balance == 1;
+                upin(p->parent);
+            }
+            else if (p->parent->balance == -1) {
+                p->parent->balance = 0;
+            }
+        }
     }
 }
 
