@@ -407,8 +407,7 @@ AvlTree::Node * AvlTree::Node::rotateRight(Node *p) {
     p->right->left = rightNodeTail;
     p->right->right = rightParentTail;
 
-    p->balance += 1;
-    p->left->balance += 1;
+    p->updateBalances();
     return p->left;
 
 }
@@ -426,8 +425,7 @@ AvlTree::Node * AvlTree::Node::rotateLeft(Node *p) {
     p->right = rightTail->left;
     rightTail->left = p;
 
-    p->balance -= 1;
-    p->right->balance -= 1;
+    p->updateBalances();
     return parent->right;
 }
 
