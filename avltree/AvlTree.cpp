@@ -90,14 +90,14 @@ void AvlTree::Node::insert(const int value) {
             this->left = new Node(value, this);
         }
         this->parent->updateBalances();
-        upIn(this->parent);
+        //upIn(this->parent);
     } else {
         if (this->right != nullptr) {
             this->right->insert(value);
         } else {
             this->right = new Node(value, this);
             this->parent->updateBalances();
-            upIn(this->right);
+            //upIn(this->right);
         }
     }
 
@@ -311,7 +311,7 @@ void AvlTree::Node::upIn(Node *p) {
             }
             //case 1.2
             else if(parent->balance == 0) {
-                parent->balance == 1;
+                parent->balance = 1;
                 upIn(parent);
             }
             //case 1.1
@@ -335,7 +335,7 @@ void AvlTree::Node::upOut(Node *p) {
             }
             //case 1.2
             else if (parent->balance == 0) {
-                parent->balance == 1;
+                parent->balance = 1;
             }
             //case 1.3
             else if (parent->balance == 1) {
