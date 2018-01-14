@@ -291,7 +291,7 @@ void AvlTree::upIn(Node *p) {
             //case 1.3
             if (parent->balance == 1) {
                 //case 1.3.1
-                if (balance == 1) {
+                if (p->balance == 1) {
                     rotateLeft(parent);
                 }
                     //case 1.3.2
