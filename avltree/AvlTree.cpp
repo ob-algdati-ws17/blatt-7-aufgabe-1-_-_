@@ -244,8 +244,8 @@ AvlTree::Node *AvlTree::Node::findSymS(Node *node) {
  * Rotations
  *******************************************************************/
 
-bool AvlTree::Node::isEquallyBalanced() const {
-    return balance == 0;
+bool AvlTree::isEquallyBalanced() const {
+    return root->balance == 0;
 }
 
 int AvlTree::Node::updateBalances() {

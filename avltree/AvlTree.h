@@ -53,12 +53,6 @@ private:
         Node *search(const int value);
 
         /**
-         * Checks, if the balance is 0
-         * @return true if balance is 0.
-         */
-        bool isEquallyBalanced() const;
-
-        /**
          * Removes a Value from the Tree. Node Function.
          * @param value Value to remove.
          */
@@ -142,6 +136,11 @@ public:
         */
     void upIn(Node *p);
 
+    /**
+     * checks, if the root is balanced
+     * @return true, if the balance of the root is 0
+     */
+    bool isEquallyBalanced() const;
 
     /**
      * Makes left/right rotations depending on the balances of the nodes (delete)
