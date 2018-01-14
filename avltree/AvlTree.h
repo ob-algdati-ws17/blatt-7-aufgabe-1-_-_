@@ -78,10 +78,17 @@ private:
         int updateBalances();
 
         /**
+         * Makes left/right rotations depending on the balances of the nodes
+         * @param p left or right node
+         */
+        void upIn(Node *p);
+
+
+        /**
          *
          * @param p
          */
-        void upin(Node *p);
+        void upOut(Node *p);
 
         /**
          * Finds the last right child of this Node.

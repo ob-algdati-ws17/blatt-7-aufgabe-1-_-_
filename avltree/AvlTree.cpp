@@ -256,45 +256,124 @@ int AvlTree::Node::updateBalances() {
 }
 
 
-void AvlTree::Node::upin(Node *p) {
+void AvlTree::Node::upIn(Node *p) {
     if (p != nullptr && p->parent != nullptr) {
 
-        //the insert was on the left side
-        if (p->parent->left == p) {
-            if (p->parent->balance == 1) {
-                p->parent->balance = 0;
+        auto *parent = p->parent;
+        //the node to add is on the left side
+        if (parent->left == p) {
+            //case 1.1
+            if (parent->balance == 1) {
+                parent->balance = 0;
             }
-            else if (p->parent->balance == 0) {
-                p->parent->balance = -1;
-                upin(p->parent);
+            //case 1.2
+            else if (parent->balance == 0) {
+                parent->balance = -1;
+                upIn(parent);
             }
-            else if (p->parent->balance == -1) {
+            //case 1.3
+            else if (parent->balance == -1) {
+                //case 1.3.1
                 if (p->balance == -1) {
                     //TODO Rotation nach rechts, dann fertig
                 }
+                //case 1.3.2
                 else if (p->balance == 1) {
                     //Doppelrotation links rechts, dann fertig
                 }
             }
         }
+        //the node to add is on the right side
         else {
-            if (p->parent->balance == 1) {
-                if (p->balance == 1) {
+            //case 1.3
+            if (parent->balance == 1) {
+                //case 1.3.1
+                if (balance == 1) {
                     //TODO Rotation nach links
                 }
+                    //case 1.3.2
                 else if (p->balance == -1) {
                     //TODO Doppelrotation rechts links
                 }
             }
-            else if(p->parent->balance == 0) {
-                p->parent->balance == 1;
-                upin(p->parent);
+            //case 1.2
+            else if(parent->balance == 0) {
+                parent->balance == 1;
+                upIn(parent);
             }
-            else if (p->parent->balance == -1) {
-                p->parent->balance = 0;
+            //case 1.1
+            else if (parent->balance == -1) {
+                parent->balance = 0;
             }
         }
     }
+}
+
+void AvlTree::Node::upOut(Node *p) {
+
+    if (p != nullptr && p->parent != nullptr) {
+        auto *parent = p->parent;
+        //the node to delete is on the left side
+        if (parent->left == p) {
+            //case 1.1
+            if (parent->balance == -1) {
+                parent->balance = 0;
+                upOut(parent);
+            }
+            //case 1.2
+            else if (parent->balance == 0) {
+                parent->balance == 1;
+            }
+            //case 1.3
+            else if (parent->balance == 1) {
+                //case 1.3.1
+                if (p->balance == 0) {
+                    //TODO Rotation nach links, dann fertig
+                }
+                //case 1.3.2
+                else if (p->balance == 1) {
+                    //Todo Rotation nach links
+                    //TODO upOut()
+                }
+                //case 1.3.3
+                else if (p->balance == -1) {
+                    //TODO Rotation nach rechts links
+                    //TODO upout()
+                }
+            }
+        }
+        //the node to delete is on the right side
+        else if (parent->right = p) {
+            //case 1.3
+            if (parent->balance == -1) {
+                //case 1.3.1
+                if (p->balance == 0)  {
+                    //TODO Rotatioon nach rechts
+                }
+                //case 1.3.2
+                else if(p->balance == 1) {
+                    //Todo Rotation nach rechts
+                    //TODO upout()
+                }
+                //case 1.3.3
+                else if (p->balance == -1) {
+                    //TODO Rotation links rechts
+                    //TODO upout()
+                }
+            }
+            //case 1.2
+            else if (parent->balance == 0) {
+                parent->balance = -1;
+            }
+            //case 1.1
+            else if (parent->balance == 1) {
+                parent->balance = 0;
+                upOut(parent);
+            }
+
+        }
+    }
+
 }
 
 /********************************************************************
