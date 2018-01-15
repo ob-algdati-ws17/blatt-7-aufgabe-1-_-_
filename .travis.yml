@@ -1,4 +1,7 @@
 language: cpp
+packages:
+  - doxygen
+  - doxygen-doc
 script:
   - cmake .
   - make clean all
