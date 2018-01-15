@@ -5,8 +5,16 @@ addons:
       - doxygen
       - doxygen-doc
       - doxygen-latex
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $TOKEN
+  on:
+    branch: master
 script:
   - cmake .
   - make clean all
   - test/testAvlTree
+  - cd doc/html
+
 compiler: gcc
