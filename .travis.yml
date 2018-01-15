@@ -1,7 +1,10 @@
 language: cpp
-packages:
-  - doxygen
-  - doxygen-doc
+addons:
+  apt:
+    packages:
+      - doxygen
+      - doxygen-doc
+      - doxygen-latex
 script:
   - cmake .
   - make clean all
