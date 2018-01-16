@@ -65,9 +65,9 @@ private:
 
 
         /**
-            * Makes left/right rotations depending on the balances of the nodes (insert)
-            * @param p left or right node
-            */
+        * Makes left/right rotations depending on the balances of the nodes (insert)
+        * @param p left or right node
+        */
         void upIn(Node *p);
 
 
@@ -96,7 +96,7 @@ private:
         * @param node Node to find successor for.
         * @return Successor node if found, nullpointer otherwise.
         */
-        Node *findSymS(Node *node);     //!< Finds the symmetric Successor
+        Node *findSymS(Node *node);
 
         /**
         * Checks if a Node is a Leaf
@@ -146,6 +146,12 @@ private:
     * @relates search
     */
     Node *searchNode(const int value);
+
+    /**
+     * Sets the root Node.
+     * @param node New root.
+     */
+    void setRoot(Node * node);
 
 
 public:

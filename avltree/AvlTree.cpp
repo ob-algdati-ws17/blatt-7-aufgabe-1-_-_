@@ -92,14 +92,14 @@ void AvlTree::Node::insert(const int value) {
         } else {
             this->left = new Node(value, this);
         }
-        this->updateBalances();
+       // this->updateBalances();
         upIn(this);
     } else {
         if (this->right != nullptr) {
             this->right->insert(value);
         } else {
             this->right = new Node(value, this);
-            this->updateBalances();
+           // this->updateBalances();
             upIn(this);
         }
     }
@@ -246,6 +246,11 @@ AvlTree::Node *AvlTree::Node::findSymS(Node *node) {
     }
     return result;
 }
+
+void AvlTree::setRoot(AvlTree::Node *node) {
+    this->root = node;
+}
+
 
 /********************************************************************
  * Rotations
