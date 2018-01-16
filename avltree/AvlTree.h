@@ -147,6 +147,12 @@ private:
     */
     Node *searchNode(const int value);
 
+    /**
+     * Sets the root Node.
+     * @param node New root.
+     */
+    void setRoot(Node * node);
+
 
 public:
 

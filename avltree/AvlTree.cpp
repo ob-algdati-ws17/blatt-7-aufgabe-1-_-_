@@ -92,14 +92,14 @@ void AvlTree::Node::insert(const int value) {
         } else {
             this->left = new Node(value, this);
         }
-        this->updateBalances();
+       // this->updateBalances();
         upIn(this);
     } else {
         if (this->right != nullptr) {
             this->right->insert(value);
         } else {
             this->right = new Node(value, this);
-            this->updateBalances();
+           // this->updateBalances();
             upIn(this);
         }
     }
@@ -224,6 +224,11 @@ AvlTree::Node *AvlTree::searchNode(const int value) {
         }
     }
 }
+
+void AvlTree::setRoot(AvlTree::Node *node) {
+    this->root = node;
+}
+
 
 AvlTree::Node *AvlTree::Node::lastRight() {
     auto lastRight = this;
@@ -569,4 +574,3 @@ std::ostream &operator<<(std::ostream &os, const AvlTree &tree) {
     os << "}" << endl;
     return os;
 }
-
