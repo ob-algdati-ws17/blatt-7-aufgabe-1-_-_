@@ -4,7 +4,7 @@
 using namespace std;
 
 // empty tree
-/*
+
 TEST(AvlTreeTest, Empty_Tree) {
     AvlTree b;
     EXPECT_EQ(nullptr, b.preorder());
@@ -77,10 +77,6 @@ TEST(AvlTreeTest, Root_SymS) {
     b.remove(5);
 }
 
-
-*/
-
-
 TEST(AvlTreeTest, Three_Node_Rotate_Right) {
     AvlTree b;
     b.insert(22);
@@ -122,8 +118,8 @@ TEST(AvlTreeTest, Three_Node_Double_Rotation_RL) {
 
 
 
-/*
-TEST(BinTreeTest, One_Node_Insert_Remove) {
+
+TEST(AvlTreeTest, One_Node_Insert_Remove) {
     AvlTree b;
     b.insert(12213);
     EXPECT_TRUE(b.search(12213));
@@ -192,4 +188,3 @@ TEST(AvlTreeTest, Three_Nodes_Insert_Remove) {
     EXPECT_EQ(nullptr, b.inorder());
     EXPECT_EQ(nullptr, b.postorder());
 }
-*/
