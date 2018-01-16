@@ -225,11 +225,6 @@ AvlTree::Node *AvlTree::searchNode(const int value) {
     }
 }
 
-void AvlTree::setRoot(AvlTree::Node *node) {
-    this->root = node;
-}
-
-
 AvlTree::Node *AvlTree::Node::lastRight() {
     auto lastRight = this;
     if (lastRight->right != nullptr) {
@@ -251,6 +246,11 @@ AvlTree::Node *AvlTree::Node::findSymS(Node *node) {
     }
     return result;
 }
+
+void AvlTree::setRoot(AvlTree::Node *node) {
+    this->root = node;
+}
+
 
 /********************************************************************
  * Rotations
@@ -574,3 +574,4 @@ std::ostream &operator<<(std::ostream &os, const AvlTree &tree) {
     os << "}" << endl;
     return os;
 }
+
