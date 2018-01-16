@@ -113,6 +113,16 @@ TEST(AvlTreeTest, Three_Node_Rotate_Left) {
     EXPECT_TRUE(b.search(44));
 }
 
+TEST(AvlTreeTest, Three_Node_Double_Rotation1) {
+    AvlTree b;
+    b.insert(22);
+    b.insert(33);
+    b.insert(25);
+    EXPECT_TRUE(b.search(22));
+    EXPECT_TRUE(b.search(33));
+    EXPECT_TRUE(b.search(25));
+}
+
 /*
 TEST(BinTreeTest, One_Node_Insert_Remove) {
     AvlTree b;

@@ -100,8 +100,9 @@ void AvlTree::Node::insert(const int value) {
         } else {
             this->right = new Node(value, this);
            // this->updateBalances();
-            upIn(this);
+
         }
+        upIn(this);
     }
 
 }
@@ -418,6 +419,9 @@ AvlTree::Node *AvlTree::Node::rotateRight(Node *p) {
     p->right->right = rightParentTail;
     p->parent = newParent;
 
+    if (p->parent == nullptr) {
+        setRoot(p);
+    }
 
     p->updateBalances();
     return p->left;
@@ -444,7 +448,9 @@ AvlTree::Node *AvlTree::Node::rotateLeft(Node *p) {
     p->left->right = leftNodeTail;
 
     p->parent = newParent;
-
+    if (p->parent == nullptr) {
+        setRoot(p);
+    }
     p->updateBalances();
     return parent->right;
 }

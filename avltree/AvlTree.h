@@ -62,8 +62,6 @@ private:
         void remove(const int value);   //!< To remove the need for multiple sub-functions
 
 
-
-
         /**
         * Makes left/right rotations depending on the balances of the nodes (insert)
         * @param p left or right node
