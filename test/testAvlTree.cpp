@@ -93,13 +93,27 @@ TEST(AvlTreeTest, EquallyBalanced) {
 }
 */
 
-TEST(AvlTreeTest, RotateTest) {
+TEST(AvlTreeTest, Three_Node_Rotate_Right) {
     AvlTree b;
     b.insert(22);
     b.insert(11);
     b.insert(7);
+    b.insert(12);
     EXPECT_TRUE(b.search(22));
+    EXPECT_TRUE(b.search(11));
+    EXPECT_TRUE(b.search(7));
 }
+/*
+TEST(AvlTreeTest, Three_Node_Rotate_Left) {
+    AvlTree b;
+    b.insert(22);
+    b.insert(33);
+    b.insert(44);
+    EXPECT_TRUE(b.search(22));
+    EXPECT_TRUE(b.search(33));
+    EXPECT_TRUE(b.search(44));
+}
+ */
 /*
 TEST(BinTreeTest, One_Node_Insert_Remove) {
     AvlTree b;
