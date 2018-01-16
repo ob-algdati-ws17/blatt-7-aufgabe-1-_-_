@@ -398,6 +398,7 @@ AvlTree::Node *AvlTree::Node::rotateRight(Node *p) {
     auto *rightNodeTail = p->right;
     auto *leftNodeTail = p->left;
     auto *rightParentTail = parent->right;
+    auto *newParent = parent->parent;
 
 
     if (parent->left == p) {
@@ -409,6 +410,8 @@ AvlTree::Node *AvlTree::Node::rotateRight(Node *p) {
     p->right = parent;
     p->right->left = rightNodeTail;
     p->right->right = rightParentTail;
+    p->parent = newParent;
+
 
     p->updateBalances();
     return p->left;
