@@ -142,7 +142,7 @@ void AvlTree::remove(const int value) {
                 root->left->parent = symSucc;
                 // symSucc will be the new root, so no parent
                 symSucc->parent = nullptr;
-                // Set the ro ot pointer to symSucc
+                // Set the root pointer to symSucc
                 root = symSucc;
                 root->updateBalances();
             }
@@ -283,7 +283,7 @@ int AvlTree::Node::updateBalances() {
     } else if (this->left == nullptr && this->right != nullptr) {
         this->balance = this->right->updateBalances() + 1;
     } else if (this->right == nullptr && this->left != nullptr) {
-        this->balance = -this->left->updateBalances() + 1;
+        this->balance = 0 - (this->left->updateBalances() + 1);
     } else {
         this->balance = (this->right->updateBalances() + 1) - (this->left->updateBalances() + 1);
     }
