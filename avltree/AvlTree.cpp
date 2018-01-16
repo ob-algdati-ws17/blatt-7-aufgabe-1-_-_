@@ -92,26 +92,15 @@ void AvlTree::Node::insert(const int value) {
         } else {
             this->left = new Node(value, this);
         }
-        auto current = this;
-        // Finds Root
-        while (current->parent != nullptr) {
-            current = current->parent;
-        }
-        upIn(this->left);
-        //current->updateBalances();
-
+        this->updateBalances();
+        upIn(this);
     } else {
         if (this->right != nullptr) {
             this->right->insert(value);
         } else {
             this->right = new Node(value, this);
-            auto current = this;
-            // Finds Root
-            while (current->parent != nullptr) {
-                current = current->parent;
-            }
-            //current->updateBalances();
-            upIn(this->right);
+            this->updateBalances();
+            upIn(this);
         }
     }
 
@@ -165,12 +154,7 @@ void AvlTree::Node::remove(const int value) {
             } else {
                 parent->left = right;
             }
-            auto current = this;
-            // Finds Root
-            while (current->parent != nullptr) {
-                current = current->parent;
-            }
-            current->updateBalances();
+            parent->updateBalances();
             upOut(parent);
         } else if (right == nullptr && !isLeaf()) {
             if (this->value == parent->left->value) {
@@ -178,12 +162,7 @@ void AvlTree::Node::remove(const int value) {
             } else {
                 parent->right = left;
             }
-            auto current = this;
-            // Finds Root
-            while (current->parent != nullptr) {
-                current = current->parent;
-            }
-            current->updateBalances();
+            parent->updateBalances();
             upOut(parent);
         } else {
             auto symSucc = findSymS(this);
@@ -204,12 +183,7 @@ void AvlTree::Node::remove(const int value) {
                 parent->right = symSucc;
             }
             // Call lasRight Again
-            auto current = symSucc;
-            // Finds Root
-            while (current->parent != nullptr) {
-                current = current->parent;
-            }
-            current->updateBalances();
+            symSucc->updateBalances();
             upOut(symSucc);
         }
         this->left = nullptr;
@@ -289,7 +263,7 @@ int AvlTree::Node::updateBalances() {
     } else if (this->right == nullptr && this->left != nullptr) {
         this->balance = 0 - (this->left->updateBalances() + 1);
     } else {
-        this->balance = (this->right->updateBalances() + 1) - (this->left->updateBalances() + 1);
+        this->balance = (this->right->updateBalances()) - (this->left->updateBalances());
     }
     return this->balance;
 }
