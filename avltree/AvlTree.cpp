@@ -68,14 +68,17 @@ void AvlTree::insert(const int value) {
                     root->left->insert(value);
                 } else {
                     root->left = new Node(value, root);
+                    root->updateBalances();
                 }
+
             } else {
                 if (root->right != nullptr) {
                     root->right->insert(value);
                 } else {
                     root->right = new Node(value, root);
+                    root->updateBalances();
                 }
-                root->updateBalances();
+
             }
         }
     }
@@ -94,8 +97,9 @@ void AvlTree::Node::insert(const int value) {
         while (current->parent != nullptr) {
             current = current->parent;
         }
-        current->updateBalances();
-        upIn(this->parent);
+        upIn(this->left);
+        //current->updateBalances();
+
     } else {
         if (this->right != nullptr) {
             this->right->insert(value);
@@ -106,8 +110,8 @@ void AvlTree::Node::insert(const int value) {
             while (current->parent != nullptr) {
                 current = current->parent;
             }
-            current->updateBalances();
-            upIn(this->parent);
+            //current->updateBalances();
+            upIn(this->right);
         }
     }
 

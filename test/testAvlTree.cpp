@@ -4,7 +4,7 @@
 using namespace std;
 
 // empty tree
-
+/*
 TEST(AvlTreeTest, Empty_Tree) {
     AvlTree b;
     EXPECT_EQ(nullptr, b.preorder());
@@ -76,7 +76,7 @@ TEST(AvlTreeTest, Root_SymS) {
     EXPECT_TRUE(b.search(6));
     b.remove(5);
 }
-
+*/
 TEST(AvlTreeTest, EquallyBalanced) {
     AvlTree b;
     b.insert(22);
