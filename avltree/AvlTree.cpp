@@ -89,14 +89,24 @@ void AvlTree::Node::insert(const int value) {
         } else {
             this->left = new Node(value, this);
         }
-        this->updateBalances();
-        upIn(this->left);
+        auto current = this;
+        // Finds Root
+        while (current->parent != nullptr) {
+            current = current->parent;
+        }
+        current->updateBalances();
+        upIn(this->parent);
     } else {
         if (this->right != nullptr) {
             this->right->insert(value);
         } else {
             this->right = new Node(value, this);
-            this->parent->updateBalances();
+            auto current = this;
+            // Finds Root
+            while (current->parent != nullptr) {
+                current = current->parent;
+            }
+            current->updateBalances();
             upIn(this->parent);
         }
     }
@@ -151,7 +161,12 @@ void AvlTree::Node::remove(const int value) {
             } else {
                 parent->left = right;
             }
-            parent->updateBalances();
+            auto current = this;
+            // Finds Root
+            while (current->parent != nullptr) {
+                current = current->parent;
+            }
+            current->updateBalances();
             upOut(parent);
         } else if (right == nullptr && !isLeaf()) {
             if (this->value == parent->left->value) {
@@ -159,9 +174,13 @@ void AvlTree::Node::remove(const int value) {
             } else {
                 parent->right = left;
             }
-            parent->updateBalances();
+            auto current = this;
+            // Finds Root
+            while (current->parent != nullptr) {
+                current = current->parent;
+            }
+            current->updateBalances();
             upOut(parent);
-
         } else {
             auto symSucc = findSymS(this);
             auto lastRight = symSucc->lastRight();
@@ -181,7 +200,12 @@ void AvlTree::Node::remove(const int value) {
                 parent->right = symSucc;
             }
             // Call lasRight Again
-            symSucc->updateBalances();
+            auto current = symSucc;
+            // Finds Root
+            while (current->parent != nullptr) {
+                current = current->parent;
+            }
+            current->updateBalances();
             upOut(symSucc);
         }
         this->left = nullptr;
@@ -277,25 +301,25 @@ void AvlTree::Node::upIn(Node *p) {
             if (parent->balance == 1) {
                 parent->balance = 0;
             }
-            //case 1.2
+                //case 1.2
             else if (parent->balance == 0) {
                 parent->balance = -1;
                 upIn(parent);
             }
-            //case 1.3
+                //case 1.3
             else if (parent->balance == -1) {
                 //case 1.3.1
                 if (p->balance == -1) {
                     rotateRight(parent);
                 }
-                //case 1.3.2
+                    //case 1.3.2
                 else {
                     rotateLeft(p);
                     rotateRight(parent);
                 }
             }
         }
-        //the node to add is on the right side
+            //the node to add is on the right side
         else {
             //case 1.3
             if (parent->balance == 1) {
@@ -309,12 +333,12 @@ void AvlTree::Node::upIn(Node *p) {
                     rotateLeft(parent);
                 }
             }
-            //case 1.2
-            else if(parent->balance == 0) {
+                //case 1.2
+            else if (parent->balance == 0) {
                 parent->balance = 1;
                 upIn(parent);
             }
-            //case 1.1
+                //case 1.1
             else if (parent->balance == -1) {
                 parent->balance = 0;
             }
@@ -333,22 +357,22 @@ void AvlTree::Node::upOut(Node *p) {
                 parent->balance = 0;
                 upOut(parent);
             }
-            //case 1.2
+                //case 1.2
             else if (parent->balance == 0) {
                 parent->balance = 1;
             }
-            //case 1.3
+                //case 1.3
             else if (parent->balance == 1) {
                 //case 1.3.1
                 if (p->balance == 0) {
                     rotateLeft(parent);
                 }
-                //case 1.3.2
+                    //case 1.3.2
                 else if (p->balance == 1) {
                     parent = rotateLeft(parent);
                     upOut(parent);
                 }
-                //case 1.3.3
+                    //case 1.3.3
                 else if (p->balance == -1) {
                     rotateRight(parent->right);
                     parent = rotateLeft(parent);
@@ -356,31 +380,31 @@ void AvlTree::Node::upOut(Node *p) {
                 }
             }
         }
-        //the node to delete is on the right side
+            //the node to delete is on the right side
         else if (parent->right = p) {
             //case 1.3
             if (parent->balance == -1) {
                 //case 1.3.1
-                if (p->balance == 0)  {
+                if (p->balance == 0) {
                     rotateRight(parent);
                 }
-                //case 1.3.2
-                else if(p->balance == 1) {
+                    //case 1.3.2
+                else if (p->balance == 1) {
                     parent = rotateRight(parent);
                     upOut(parent);
                 }
-                //case 1.3.3
+                    //case 1.3.3
                 else if (p->balance == -1) {
                     rotateLeft(parent->left);
                     parent = rotateRight(parent);
                     upOut(parent);
                 }
             }
-            //case 1.2
+                //case 1.2
             else if (parent->balance == 0) {
                 parent->balance = -1;
             }
-            //case 1.1
+                //case 1.1
             else if (parent->balance == 1) {
                 parent->balance = 0;
                 upOut(parent);
@@ -391,7 +415,7 @@ void AvlTree::Node::upOut(Node *p) {
 
 }
 
-AvlTree::Node * AvlTree::Node::rotateRight(Node *p) {
+AvlTree::Node *AvlTree::Node::rotateRight(Node *p) {
     auto *parent = p->parent;
     auto *rightNodeTail = p->right;
     auto *leftNodeTail = p->left;
@@ -412,7 +436,7 @@ AvlTree::Node * AvlTree::Node::rotateRight(Node *p) {
 
 }
 
-AvlTree::Node * AvlTree::Node::rotateLeft(Node *p) {
+AvlTree::Node *AvlTree::Node::rotateLeft(Node *p) {
     auto *parent = p->parent;
     auto *leftTail = p->left;
     auto *rightTail = p->right;
