@@ -6,6 +6,9 @@
 
 using namespace std;
 
+/**
+ * Class for a balanced Tree
+ */
 class AvlTree {
 
 private:
@@ -108,17 +111,29 @@ private:
         int updateBalances();
 
 
-
-
         /**
          * Finds the last right child of this Node.
          * @return The last right node.
          */
         Node *lastRight();
 
-        vector<int> *preorder() const;  //!< Hauptreihenfolge
-        vector<int> *inorder() const;   //!< Symmetrische Reihenfolge
-        vector<int> *postorder() const; //!< Nebenreihenfolge
+        /**
+         * Gets the Node and its Children in Preorder.
+         * @return Vector with the Nodes in Order.
+         */
+        vector<int> *preorder() const;
+
+        /**
+         * Gets the Node and its Children in order.
+         * @return Vector with the Nodes in Order.
+         */
+        vector<int> *inorder() const;
+
+        /**
+         * Gets the Node and its Children in Postorder.
+         * @return Vector with the Nodes in Order.
+         */
+        vector<int> *postorder() const;
     };
 
     //! Root node for the Tree
@@ -160,16 +175,32 @@ public:
     */
     void remove(const int);
 
-/**
+     /**
      * checks, if the root is balanced
      * @return true, if the balance of the root is 0
      */
     bool isEquallyBalanced() const;
 
+    /**
+    * Gets the Tree in Preorder.
+    * @return Vector with the Nodes in Order.
+    */
     vector<int> *preorder() const;  // (Hauptreihenfolge)
+    /**
+    * Gets the Tree in Symmetrical Order.
+    * @return Vector with the Nodes in Order.
+    */
     vector<int> *inorder() const;   // (Symmetrische Reihenfolge)
+    /**
+    * Gets the Tree in Postorder.
+    * @return Vector with the Nodes in Order.
+    */
     vector<int> *postorder() const; // (Nebenreihenfolge)
 
+    /**
+     * Prints the Tree to the output stream.
+     * @return
+     */
     friend ostream &operator<<(ostream &, const AvlTree &);
 
 };
