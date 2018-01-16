@@ -152,6 +152,9 @@ void AvlTree::remove(const int value, Node* node) {
             } else {
                 node->parent->left = nullptr;
             }
+            node->parent->updateBalances();
+            upOut(node->parent);
+            delete node;
             return;
         } else if (node->left == nullptr && !node->isLeaf()) {
             // Getting our position with the parent
@@ -162,6 +165,7 @@ void AvlTree::remove(const int value, Node* node) {
             }
             node->parent->updateBalances();
             upOut(node->parent);
+            delete node;
             return;
         } else if (node->right == nullptr && !node->isLeaf()) {
             if (node->value == node->parent->left->value) {
@@ -171,6 +175,7 @@ void AvlTree::remove(const int value, Node* node) {
             }
             node->parent->updateBalances();
             upOut(node->parent);
+            delete node;
             return;
         } else {
             auto symSucc = node->findSymS(node);
