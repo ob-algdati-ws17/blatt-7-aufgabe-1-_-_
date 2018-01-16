@@ -188,3 +188,15 @@ TEST(AvlTreeTest, Three_Nodes_Insert_Remove) {
     EXPECT_EQ(nullptr, b.inorder());
     EXPECT_EQ(nullptr, b.postorder());
 }
+
+TEST(AvlTreeTest, Remove_Node_Subtrees) {
+    AvlTree t;
+    for (int i = 15; i > 0; i--) {
+        t.insert(i);
+    }
+    t.remove(10);
+    EXPECT_FALSE(t.search(10));
+    EXPECT_TRUE(t.search(11));
+    EXPECT_TRUE(t.search(9));
+}
+
