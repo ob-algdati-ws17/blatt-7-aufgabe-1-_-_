@@ -76,7 +76,7 @@ TEST(AvlTreeTest, Root_SymS) {
     EXPECT_TRUE(b.search(6));
     b.remove(5);
 }
-*/
+
 TEST(AvlTreeTest, EquallyBalanced) {
     AvlTree b;
     b.insert(22);
@@ -91,7 +91,15 @@ TEST(AvlTreeTest, EquallyBalanced) {
     EXPECT_TRUE(b.search(36));
    // EXPECT_TRUE(b.isEquallyBalanced());
 }
+*/
 
+TEST(AvlTreeTest, RotateTest) {
+    AvlTree b;
+    b.insert(22);
+    b.insert(11);
+    b.insert(7);
+    EXPECT_TRUE(b.search(22));
+}
 /*
 TEST(BinTreeTest, One_Node_Insert_Remove) {
     AvlTree b;
