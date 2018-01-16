@@ -303,7 +303,7 @@ void AvlTree::Node::upIn(Node *p) {
             if (parent->balance == 1) {
                 //case 1.3.1
                 if (p->balance == 1) {
-                    rotateLeft(parent);
+                    rotateLeft(p);
                 }
                     //case 1.3.2
                 else {
@@ -408,6 +408,7 @@ AvlTree::Node *AvlTree::Node::rotateRight(Node *p) {
     }
     p->left = leftNodeTail;
     p->right = parent;
+    p->right->parent = p;
     p->right->left = rightNodeTail;
     p->right->right = rightParentTail;
     p->parent = newParent;
@@ -420,18 +421,26 @@ AvlTree::Node *AvlTree::Node::rotateRight(Node *p) {
 
 AvlTree::Node *AvlTree::Node::rotateLeft(Node *p) {
     auto *parent = p->parent;
-    auto *leftTail = p->left;
-    auto *rightTail = p->right;
+    auto *rightNodeTail = p->right;
+    auto *leftNodeTail = p->left;
+    auto *leftParentTail = parent->left;
+    auto *newParent = parent->parent;
 
-    if (parent->left == p) {
-        parent->left = rightTail;
+    if (parent->right == p) {
+        parent->right = p;
     } else {
-        parent->right = rightTail;
+        parent->left = p;
     }
-    p->right = rightTail->left;
-    rightTail->left = p;
 
-    //p->updateBalances();
+    p->right = rightNodeTail;
+    p->left = parent;
+    p->left->parent = p;
+    p->left->left = leftParentTail;
+    p->left->right = leftNodeTail;
+
+    p->parent = newParent;
+
+    p->updateBalances();
     return parent->right;
 }
 
