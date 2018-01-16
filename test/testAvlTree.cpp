@@ -77,21 +77,9 @@ TEST(AvlTreeTest, Root_SymS) {
     b.remove(5);
 }
 
-TEST(AvlTreeTest, EquallyBalanced) {
-    AvlTree b;
-    b.insert(22);
-    b.insert(12);
-    b.insert(32);
-    b.insert(7);
-    b.insert(27);
-    b.insert(42);
-    b.insert(37);
-    b.insert(47);
-    b.insert(36);
-    EXPECT_TRUE(b.search(36));
-   // EXPECT_TRUE(b.isEquallyBalanced());
-}
+
 */
+
 
 TEST(AvlTreeTest, Three_Node_Rotate_Right) {
     AvlTree b;
@@ -112,8 +100,7 @@ TEST(AvlTreeTest, Three_Node_Rotate_Left) {
     EXPECT_TRUE(b.search(33));
     EXPECT_TRUE(b.search(44));
 }
-
-TEST(AvlTreeTest, Three_Node_Double_Rotation1) {
+TEST(AvlTreeTest, Three_Node_Double_Rotation_LR) {
     AvlTree b;
     b.insert(22);
     b.insert(33);
@@ -122,6 +109,18 @@ TEST(AvlTreeTest, Three_Node_Double_Rotation1) {
     EXPECT_TRUE(b.search(33));
     EXPECT_TRUE(b.search(25));
 }
+
+TEST(AvlTreeTest, Three_Node_Double_Rotation_RL) {
+    AvlTree b;
+    b.insert(22);
+    b.insert(11);
+    b.insert(17);
+    EXPECT_TRUE(b.search(22));
+    EXPECT_TRUE(b.search(11));
+    EXPECT_TRUE(b.search(17));
+}
+
+
 
 /*
 TEST(BinTreeTest, One_Node_Insert_Remove) {

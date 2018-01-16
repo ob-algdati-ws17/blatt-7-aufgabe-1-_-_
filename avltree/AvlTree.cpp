@@ -98,10 +98,10 @@ void AvlTree::insert(const int value, Node* node) {
         if (node->right != nullptr) {
             insert(value, node->right);
         } else {
-            node = new Node(value, node);
-            node->updateBalances();
-            upIn(node);
+            node->right = new Node(value, node);
         }
+        node->updateBalances();
+        upIn(node);
     }
 }
 
@@ -280,19 +280,22 @@ void AvlTree::upIn(Node *p) {
             }
                 //case 1.2
             else if (parent->balance == 0) {
-                parent->balance = -1;
-                upIn(parent);
+                parent->updateBalances();
+                //parent->balance = -1;
+                upIn(p->parent);
             }
                 //case 1.3
             else if (parent->balance == -1) {
                 //case 1.3.1
                 if (p->balance == -1) {
                     rotateRight(p);
+                    p->updateBalances();
                 }
                     //case 1.3.2
                 else {
-                    rotateLeft(p);
-                    rotateRight(parent);
+                    rotateLeft(p->right);
+                    rotateRight(p->parent);
+                    p->parent->updateBalances();
                 }
             }
         }
@@ -303,17 +306,20 @@ void AvlTree::upIn(Node *p) {
                 //case 1.3.1
                 if (p->balance == 1) {
                     rotateLeft(p);
+                    p->updateBalances();
                 }
                     //case 1.3.2
                 else {
-                    rotateRight(p);
-                    rotateLeft(parent);
+                    rotateRight(p->left);
+                    rotateLeft(p->parent);
+                    p->parent->updateBalances();
                 }
             }
                 //case 1.2
             else if (parent->balance == 0) {
-                parent->balance = 1;
-                upIn(parent);
+                parent->updateBalances();
+                //parent->balance = 1;
+                upIn(p->parent);
             }
                 //case 1.1
             else if (parent->balance == -1) {
@@ -416,7 +422,7 @@ AvlTree::Node *AvlTree::rotateRight(Node *p) {
         root = p;
     }
 
-    p->updateBalances();
+    //p->updateBalances();
     return p->left;
 
 }
