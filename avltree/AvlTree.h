@@ -43,53 +43,6 @@ private:
         int balance = 0; //!< Current balance of the Node
 
         /**
-        * Inserts a value in the Tree. Node fuction to prevent multiple sub-functions.
-        * @param value [in] Value to insert
-        */
-        void insert(const int value);
-
-        /**
-        * Searches for a value in the Tree. Node function.
-        * @param value Value to search for.
-        * @return Node pointer if found, nullpointer otherwise.
-        */
-        Node *search(const int value);
-
-        /**
-         * Removes a Value from the Tree. Node Function.
-         * @param value Value to remove.
-         */
-        void remove(const int value);   //!< To remove the need for multiple sub-functions
-
-
-        /**
-        * Makes left/right rotations depending on the balances of the nodes (insert)
-        * @param p left or right node
-        */
-        void upIn(Node *p);
-
-
-        /**
-         * Makes left/right rotations depending on the balances of the nodes (delete)
-         * @param p left or right node
-         */
-        void upOut(Node *p);
-
-        /**
-         * Rotates Left
-         * @param p the node to be rotated around
-         * @return the node, which is now on top
-         */
-        Node *rotateLeft(Node *p);
-
-        /**
-         * Rotates right
-         * @param p the node to be rotated around
-         * @return the node, which is now on top
-         */
-        Node *rotateRight(Node *p);
-
-        /**
         * Finds the symmetric successor for a node. Moved to Node struct to have accessability from Node remove.
         * @param node Node to find successor for.
         * @return Successor node if found, nullpointer otherwise.
@@ -146,10 +99,52 @@ private:
     Node *searchNode(const int value);
 
     /**
-     * Sets the root Node.
-     * @param node New root.
+        * Inserts a value in the Tree. Node fuction to prevent multiple sub-functions.
+        * @param value [in] Value to insert
+        */
+    void insert(const int value, Node* node);
+
+    /**
+    * Searches for a value in the Tree. Node function.
+    * @param value Value to search for.
+    * @return Node pointer if found, nullpointer otherwise.
+    */
+    Node * search(const int value, Node* node)const;
+
+    /**
+     * Removes a Value from the Tree. Node Function.
+     * @param value Value to remove.
      */
-    void setRoot(Node * node);
+    void remove(const int value, Node* node);   //!< To remove the need for multiple sub-functions
+
+
+    /**
+    * Makes left/right rotations depending on the balances of the nodes (insert)
+    * @param p left or right node
+    */
+    void upIn(Node *p);
+
+
+    /**
+     * Makes left/right rotations depending on the balances of the nodes (delete)
+     * @param p left or right node
+     */
+    void upOut(Node *p);
+
+    /**
+     * Rotates Left
+     * @param p the node to be rotated around
+     * @return the node, which is now on top
+     */
+    Node *rotateLeft(Node *p);
+
+    /**
+     * Rotates right
+     * @param p the node to be rotated around
+     * @return the node, which is now on top
+     */
+    Node *rotateRight(Node *p);
+
 
 
 public:
